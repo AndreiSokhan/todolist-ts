@@ -1,30 +1,23 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./components/TodoList";
+import {v1} from "uuid";
 
 
-export const App = ()=> {
-    // const tasks = [
-    //     { id: 1, title: "HTML&CSS", isDone: true },
-    //     { id: 2, title: "JS", isDone: true },
-    //     { id: 3, title: "ReactJS", isDone: false },
-    //     { id: 4, title: "JS", isDone: true },
-    //     { id: 5, title: "ReactJS", isDone: false }
-    // ]
-
+export const App = () => {
 
     //useState - это hook  setTasks - команда которая говорит Reactу ПЕРЕРИСОВАТЬ
     const [tasks, setTasks] = useState([
-        {id: 1, title: "HTML&CSS", isDone: true},
-        {id: 2, title: "JS", isDone: true},
-        {id: 3, title: "ReactJS", isDone: false},
-        {id: 4, title: "Rest API", isDone: true},
-        {id: 5, title: "GraphQL", isDone: false}
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false},
+        {id: v1(), title: "Rest API", isDone: true},
+        {id: v1(), title: "GraphQL", isDone: false}
     ])
 
-    const removeTask = (newId: number) => {
+    const removeTask = (newId: string) => {
         // удалить строчку id которой приходит
-        let filtered = tasks.filter((el) => el.id !==newId)
+        let filtered = tasks.filter((el) => el.id !== newId)
         setTasks(filtered)
     }
 
@@ -35,13 +28,16 @@ export const App = ()=> {
         setValueButton(filterValue)
     }
 
-    // let prokladka = tasks.filter(el => el.isDone === true)
+    const addTask = (newTitle:string) => {
+        let newTask = {id: v1(), title: newTitle, isDone: true}
+        setTasks([newTask, ...tasks])
+    }
 
     let prokladka = tasks
     if (valueButton === "Active") {
         prokladka = tasks.filter(el => el.isDone === false)
     }
-    if (valueButton === "Complited") {
+    if (valueButton === "Completed") {
         prokladka = tasks.filter(el => el.isDone === true)
     }
 
@@ -52,7 +48,7 @@ export const App = ()=> {
                 task={prokladka}
                 removeTask={removeTask}
                 tasksFilter={tasksFilter}
-                // task={tasks}
+                addTask={addTask}
             />
         </div>
     );
