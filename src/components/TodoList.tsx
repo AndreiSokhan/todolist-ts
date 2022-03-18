@@ -50,14 +50,16 @@ export const TodoList = (props: TodoListPropsType) => {
                     <input value={newTitle}
                            onKeyPress={onKeyPressHandler}
                            onChange={onChangeHandler}/>
-                    <button onClick={addTaskHandler}>+</button>
+                    {/*<button onClick={addTaskHandler}>+</button>*/}
+                    <Button name={'+'} callBack={addTaskHandler}/>
                 </div>
                 <ul>
                     {props.task.map((el) => {
 
                         return (
                             <li key={el.id}>
-                                <button onClick={()=> removeTaskHandler(el.id)}>x</button>
+                                <Button name={'x'} callBack={()=> removeTaskHandler(el.id)}/>
+                                {/*<button onClick={()=> removeTaskHandler(el.id)}>x</button>*/}
                                 <input type="checkbox" checked={el.isDone}/>
                                 <span>{el.title}</span>
                             </li>
@@ -69,9 +71,9 @@ export const TodoList = (props: TodoListPropsType) => {
                     <Button name={'Active'} callBack={() => filterHandler('active')}/>
                     <Button name={'Completed'} callBack={() => filterHandler('completed')}/>
 
-                    <button onClick={() => filterHandler('All')}>All</button>
-                    <button onClick={() => filterHandler('Active')}>Active</button>
-                    <button onClick={() => filterHandler('Completed')}>Completed</button>
+                    {/*<button onClick={() => removeTaskHandler('All')}>All</button>*/}
+                    {/*<button onClick={() => removeTaskHandler('Active')}>Active</button>*/}
+                    {/*<button onClick={() => removeTaskHandler('Completed')}>Completed</button>*/}
                 </div>
             </div>
         </div>
