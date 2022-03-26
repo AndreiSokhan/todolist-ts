@@ -8,7 +8,9 @@ function App() {
    let [tasks1, setTasks1] = useState([
       {id: v1(), title: "HTML&CSS", isDone: true},
       {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false}
+      {id: v1(), title: "ReactJS", isDone: false},
+      {id: v1(), title: "RestAPI", isDone: false},
+      {id: v1(), title: "GraphQL", isDone: false}
    ])
 
 
@@ -25,9 +27,8 @@ function App() {
 
    const addTask = (newTitle: string) => {
       let newTask = {id: v1(), title: newTitle, isDone: false}
-      setTasks1([newTask,...tasks1])
+      setTasks1([newTask, ...tasks1])
    }
-
 
    let prokladka = tasks1
    if (valueButton === "Active") {

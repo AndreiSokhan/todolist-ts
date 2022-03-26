@@ -1,4 +1,5 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from "react";
+import {Button} from "./Button";
 
 type TasksPropsType = {
    id: string,
@@ -36,10 +37,9 @@ export const TodoList = (props: TodoListPropsType) => {
    const FilterHandler = (filterValue: string) => {
       props.tasksFilter(filterValue)
    }
-   const removeTaskHandler = (elID:string) => {
+   const removeTaskHandler = (elID: string) => {
       props.removeTask(elID)
    }
-
 
    return (
       <div>
@@ -49,17 +49,16 @@ export const TodoList = (props: TodoListPropsType) => {
                    onKeyPress={onKeyPressHandler}
                    onChange={onChangeHandler}
             />
-
-
             {/*onClick не может в себе содержать функцию. При наличии функции мы всегда ее выносим вверх и в onClick оставляем только ссылку на нее*/}
-            <button onClick={addTaskHandler}>+</button>
+            {/*<button onClick={addTaskHandler}>+</button>*/}
+            <Button name={'+'} callBack={addTaskHandler}/>
          </div>
          <ul>
             {props.task.map((el) => {
                return (
                   <li key={el.id}>
-                     {/*<button onClick={() => props.removeTask(el.id)}>x</button>*/}
-                     <button onClick={() => removeTaskHandler(el.id)}>x</button>
+                     {/*<button onClick={() => removeTaskHandler(el.id)}>x</button>*/}
+                     <Button name={'x'} callBack={() => removeTaskHandler(el.id)}/>
                      <input type="checkbox" checked={el.isDone}/>
                      <span>{el.title}</span>
                   </li>
@@ -68,10 +67,13 @@ export const TodoList = (props: TodoListPropsType) => {
 
          </ul>
          <div>
-            {/*<button onClick={() => props.tasksFilter("All")}>All</button>*/}
-            <button onClick={() => FilterHandler('All')}>All</button>
-            <button onClick={() => FilterHandler("Active")}>Active</button>
-            <button onClick={() => FilterHandler("Completed")}>Completed</button>
+            <Button name={'All'} callBack={() => FilterHandler('All')}/>
+            <Button name={'Active'} callBack={() => FilterHandler('Active')}/>
+            <Button name={'Completed'} callBack={() => FilterHandler('Completed')}/>
+
+            {/*<button onClick={() => FilterHandler('All')}>All</button>*/}
+            {/*<button onClick={() => FilterHandler("Active")}>Active</button>*/}
+            {/*<button onClick={() => FilterHandler("Completed")}>Completed</button>*/}
          </div>
       </div>
    )
