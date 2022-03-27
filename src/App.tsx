@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./components/TodoList";
 import {v1} from "uuid";
+import {ModalWindow} from "./components/ModalWindow";
 
 function App() {
 
@@ -41,6 +42,13 @@ function App() {
 
    return (
       <div className="App">
+         <ModalWindow name={"Window1"}>
+            <>
+               <input type="text"/>
+               <input type="text"/>
+               <input type="checkbox"/>
+            </>
+         </ModalWindow>
          <TodoList
             title={"What to learn"}
             task={prokladka}
