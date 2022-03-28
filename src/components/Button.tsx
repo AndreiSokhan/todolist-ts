@@ -2,14 +2,14 @@ import React from "react";
 
 type propsButtonType = {
    name: string,
-   callBack: (newTitle: string) => void,
-   newTitle: string
+   callBack: () => void,
+   // newTitle: string
 }
 
 export const Button = (props: propsButtonType) => {
 
    const onClickHandler = () => {
-      props.callBack(props.newTitle)
+      props.callBack()
    }
 
    return (

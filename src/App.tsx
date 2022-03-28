@@ -42,13 +42,13 @@ function App() {
 
    return (
       <div className="App">
-         <ModalWindow name={"Window1"}>
-            <>
-               <input type="text"/>
-               <input type="text"/>
-               <input type="checkbox"/>
-            </>
-         </ModalWindow>
+         {/*<ModalWindow name={"Window1"}>*/}
+         {/*   <>*/}
+         {/*      <input type="text"/>*/}
+         {/*      <input type="text"/>*/}
+         {/*      <input type="checkbox"/>*/}
+         {/*   </>*/}
+         {/*</ModalWindow>*/}
          <TodoList
             title={"What to learn"}
             task={prokladka}
