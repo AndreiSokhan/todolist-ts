@@ -12,16 +12,33 @@ const App = () => {
       {id: 5, title: "GraphQL", isDone: false}
    ])
 
-   const removeTask = (removeId:number) => {
-      setTasks(tasks.filter((el)=>el.id!==removeId))
+   const [FilterValuesType, setfilterValuesType]=useState("All")
+
+   const removeTask = (removeId: number) => {
+      setTasks(tasks.filter((el) => el.id !== removeId))
    }
+
+   const changeFilter = (filterValue: string) => {
+      setfilterValuesType(filterValue)
+   }
+
+   let filter=tasks;
+   if (FilterValuesType ==='Active') {
+      filter = tasks.filter((el) => !el.isDone)
+   }
+   if (FilterValuesType ==='Completed') {
+      filter = tasks.filter((el) => el.isDone)
+   }
+
+   // let colander = tasks.filter((el) => !el.isDone)
 
    return (
       <div className="App">
          <Todolist
-            title={"What to lern"}
-            tasks={tasks}
+            title={"What to learn"}
+            tasks={filter}
             removeTask={removeTask}
+            changeFilter={changeFilter}
          />
       </div>
    );
