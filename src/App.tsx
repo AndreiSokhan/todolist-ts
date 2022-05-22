@@ -15,8 +15,8 @@ const App = () => {
       {id: v1(), title: "GraphQL", isDone: false}
    ])
 
-   const removeTask = (removeId: string) => {
-      setTasks(tasks.filter((el) => el.id !== removeId))
+   const removeTask = (id: string) => {
+      setTasks(tasks.filter((el) => el.id !== id))
    }
 
    const addTask = (newTitle: string) => {

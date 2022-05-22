@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValueType} from "../App";
+import {Button} from "./Button";
 
 type TasksPropsType = {
    id: string
@@ -33,11 +34,11 @@ export const Todolist = (props: TodolistPropsType) => {
       }
    }
 
-   const changeFilterHandler = (filterValue:FilterValueType) => {
+   const changeFilterHandler = (filterValue: FilterValueType) => {
       props.changeFilter(filterValue)
    }
 
-   const removeTaskHandler = (tID:string) => {
+   const removeTaskHandler = (tID: string) => {
       props.removeTask(tID)
    }
 
@@ -49,21 +50,22 @@ export const Todolist = (props: TodolistPropsType) => {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
             />
-            <button onClick={addTaskHandler}>+</button>
+            <Button name={'+'} callBack={addTaskHandler}/>
          </div>
          <ul>
             {
                props.tasks.map(el => <li key={el.id}>
-                     <button onClick={()=>removeTaskHandler(el.id)}>x</button>
-                     <input type="checkbox" checked={el.isDone}/>
-                     <span>{el.title}</span>
-                  </li>)
+                  <Button name={'x'} callBack={() => removeTaskHandler(el.id)}/>
+
+                  <input type="checkbox" checked={el.isDone}/>
+                  <span>{el.title}</span>
+               </li>)
             }
          </ul>
          <div>
-            <button onClick={()=>changeFilterHandler('All')}>All</button>
-            <button onClick={()=>changeFilterHandler('Active')}>Active</button>
-            <button onClick={()=>changeFilterHandler('Completed')}>Completed</button>
+            <Button name={'All'} callBack={() => changeFilterHandler('All')}/>
+            <Button name={'Active'} callBack={() => changeFilterHandler('Active')}/>
+            <Button name={'Completed'} callBack={() => changeFilterHandler('Completed')}/>
          </div>
       </div>
    );
