@@ -19,7 +19,7 @@ const App = () => {
       setTasks(tasks.filter((el) => el.id !== removeId))
    }
 
-   const addTask=(newTitle:string)=>{
+   const addTask = (newTitle: string) => {
       let newTask = {id: v1(), title: newTitle, isDone: false}
       setTasks([newTask, ...tasks])
    }
@@ -37,8 +37,6 @@ const App = () => {
    if (filter === 'Completed') {
       tasksFilter = tasks.filter(el => el.isDone)
    }
-
-   // let colander = tasks.filter((el) => !el.isDone)
 
    return (
       <div className="App">
