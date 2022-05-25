@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {FilterValueType} from "../App";
 import {Button} from "./Button";
 import {Input} from "./Input";
@@ -15,6 +15,7 @@ type TodolistPropsType = {
    removeTask: (removeId: string) => void
    changeFilter: (filterValue: FilterValueType) => void
    addTask: (newTitle: string) => void
+   changeStatusCheckbox:(currentId:string, eventStatud:boolean)=>void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -34,14 +35,14 @@ export const Todolist = (props: TodolistPropsType) => {
       props.removeTask(tID)
    }
 
+   const chackboxHandler = (currentId:string, currentEvent:boolean) => {
+      props.changeStatusCheckbox(currentId, currentEvent)
+   }
+
    return (
       <div>
          <h3>{props.title}</h3>
          <div>
-            {/*<input value={title}*/}
-            {/*       onChange={onChangeHandler}*/}
-            {/*       onKeyPress={onKeyPressHandler}*/}
-            {/*/>*/}
             <Input title={title} setTitle={setTitle} callBack={addTaskHandler}/>
             <Button name={'+'} callBack={addTaskHandler}/>
          </div>
@@ -49,8 +50,7 @@ export const Todolist = (props: TodolistPropsType) => {
             {
                props.tasks.map(el => <li key={el.id}>
                   <Button name={'x'} callBack={() => removeTaskHandler(el.id)}/>
-
-                  <input type="checkbox" checked={el.isDone}/>
+                  <input type="checkbox" checked={el.isDone} onChange={(event)=>chackboxHandler(el.id, event.currentTarget.checked)}/>
                   <span>{el.title}</span>
                </li>)
             }

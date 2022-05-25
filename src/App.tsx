@@ -24,6 +24,10 @@ const App = () => {
       setTasks([newTask, ...tasks])
    }
 
+   const changeStatusCheckbox = (currentId: string, eventStatus: boolean) => {
+      setTasks(tasks.map((el) => el.id === currentId ? {...el, isDone: eventStatus} : el))
+   }
+
    let [filter, setFilter] = useState<FilterValueType>("All")
 
    const changeFilter = (filterValue: FilterValueType) => {
@@ -46,6 +50,7 @@ const App = () => {
             removeTask={removeTask}
             changeFilter={changeFilter}
             addTask={addTask}
+            changeStatusCheckbox={changeStatusCheckbox}
          />
       </div>
    );

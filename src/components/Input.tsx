@@ -23,6 +23,5 @@ export const Input = (props:InputPropsType) => {
              onChange={onChangeHandler}
              onKeyPress={onKeyPressHandler}
       />
-
    );
 };
