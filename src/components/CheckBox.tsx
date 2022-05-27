@@ -2,7 +2,6 @@ import React, {ChangeEvent} from 'react';
 
 type CheckBoxPropsType={
    elIsDone:boolean
-   elID:string
    callBack:(currentEvent:boolean)=>void
 }
 
