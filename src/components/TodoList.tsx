@@ -4,7 +4,7 @@ import {Button} from "./Button";
 import {Input} from "./Input";
 import {CheckBox} from "./CheckBox";
 
-import style from '../modules/Todolist.module.css';
+import s from '../modules/Todolist.module.css';
 
 
 type TasksPropsType = {
@@ -14,12 +14,14 @@ type TasksPropsType = {
 }
 
 type TodolistPropsType = {
+   todolistId: string
    title: string
    tasks: Array<TasksPropsType>
    removeTask: (removeId: string) => void
-   changeFilter: (filterValue: FilterValueType) => void
+   changeFilter: (todolistId:string, filterValue: FilterValueType) => void
    addTask: (newTitle: string) => void
    changeStatusCheckbox: (currentId: string, eventStatus: boolean) => void
+   filter: FilterValueType
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -36,8 +38,8 @@ export const Todolist = (props: TodolistPropsType) => {
       }
    }
 
-   const changeFilterHandler = (filterValue: FilterValueType) => {
-      props.changeFilter(filterValue)
+   const changeFilterHandler = (todolistId:string, filterValue: FilterValueType) => {
+      props.changeFilter(todolistId, filterValue)
    }
 
    const removeTaskHandler = (tID: string) => {
@@ -51,7 +53,7 @@ export const Todolist = (props: TodolistPropsType) => {
    return (
       <div>
          <h3>{props.title}</h3>
-         <div>
+         <div className={s.fullInput}>
             <Input
                title={title}
                setTitle={setTitle}
@@ -63,7 +65,7 @@ export const Todolist = (props: TodolistPropsType) => {
          </div>
          <ul>
             {
-               props.tasks.map(el => <li key={el.id} className={el.isDone ? style.isDone : ''}>
+               props.tasks.map(el => <li key={el.id} className={el.isDone ? s.isDone : ''}>
                   <Button name={'x'} callBack={() => removeTaskHandler(el.id)}/>
                   <CheckBox
                      elIsDone={el.isDone}
@@ -74,10 +76,9 @@ export const Todolist = (props: TodolistPropsType) => {
             }
          </ul>
          <div>
-            <Button /* className={props.filter==='All' ? style.activeFilter : ''}*/ name={'All'}
-                                                                                    callBack={() => changeFilterHandler('All')}/>
-            <Button name={'Active'} callBack={() => changeFilterHandler('Active')}/>
-            <Button name={'Completed'} callBack={() => changeFilterHandler('Completed')}/>
+            <Button name={'All'} callBack={() => changeFilterHandler(props.todolistId,'All')}/>
+            <Button name={'Active'} callBack={() => changeFilterHandler(props.todolistId,'Active')}/>
+            <Button name={'Completed'} callBack={() => changeFilterHandler(props.todolistId,'Completed')}/>
          </div>
       </div>
    );
