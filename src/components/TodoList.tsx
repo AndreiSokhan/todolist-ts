@@ -7,7 +7,7 @@ import {CheckBox} from "./CheckBox";
 import s from '../modules/Todolist.module.css';
 
 
-type TasksPropsType = {
+export type TasksPropsType = {
    id: string
    title: string
    isDone: boolean
