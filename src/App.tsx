@@ -11,51 +11,67 @@ export type TodolistsType = {
 }
 
 const App = () => {
+   let todolistsId1 = v1();
+   let todolistsId2 = v1();
 
    let [todolists, setTodolists] = useState<Array<TodolistsType>>([
-      {id: v1(), title: "What to lern", filter: 'All'},
-      {id: v1(), title: "What to buy", filter: 'Completed'},
+      {id: todolistsId1, title: "What to lern", filter: 'All'},
+      {id: todolistsId2, title: "What to buy", filter: 'All'}
    ])
 
+   let [tasks, setTasks] = useState({
+      [todolistsId1]: [
+         {id: v1(), title: "HTML&CSS", isDone: true},
+         {id: v1(), title: "JS", isDone: true},
+         {id: v1(), title: "React&JS", isDone: false},
+         {id: v1(), title: "RestAPI", isDone: false},
+         {id: v1(), title: "GraphQL", isDone: false}
+      ],
+      [todolistsId2]: [
+         {id: v1(), title: "Milk", isDone: true},
+         {id: v1(), title: "Bread", isDone: true},
+         {id: v1(), title: "New car", isDone: false},
+         {id: v1(), title: "Flat", isDone: false},
+         {id: v1(), title: "New jeans", isDone: false}
+      ]
+   });
 
-   let [tasks, setTasks] = useState([
-      {id: v1(), title: "HTML&CSS", isDone: true},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "React&JS", isDone: false},
-      {id: v1(), title: "RestAPI", isDone: false},
-      {id: v1(), title: "GraphQL", isDone: false}
-   ])
-
-   // let [filter, setFilter] = useState<FilterValueType>("All")
-
-   const removeTask = (id: string) => {
-      setTasks(tasks.filter((el) => el.id !== id))
+   const removeTask = (todolistId: string, taskId: string) => {
+      setTasks({...tasks, [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)})
    }
 
-   const addTask = (newTitle: string) => {
+   const removeTodolist = (todolistId: string) => {
+      setTodolists(todolists.filter(el=>el.id!==todolistId))
+      delete tasks[todolistId]
+   }
+
+   const addTask = (todolistId: string, newTitle: string) => {
       let newTask = {id: v1(), title: newTitle, isDone: false}
-      setTasks([newTask, ...tasks])
+      setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
    }
 
-   const changeStatusCheckbox = (currentId: string, eventStatus: boolean) => {
-      setTasks(tasks.map((el) => el.id === currentId ? {...el, isDone: eventStatus} : el))
+   const changeStatusCheckbox = (todolistId: string, taskId: string, eventStatus: boolean) => {
+      setTasks({
+         ...tasks,
+         [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isDone: eventStatus} : el)
+      })
    }
 
-
-   const changeFilter = (todolistId:string, filterValue: FilterValueType) => {
-      // setFilter(filterValue)
+   const changeFilter = (todolistId: string, filterValue: FilterValueType) => {
+      //в el(элементе) здесь лежит просто внтренность нашего объекта спрэд оператор делает копию без обертки
+      setTodolists(todolists.map(el => el.id === todolistId ? {...el, filter: filterValue} : el))
    }
 
    return (
       <div className="App">
          {
             todolists.map((tl) => {
-               let tasksFilter = tasks;
+               let tasksFilter = tasks[tl.id];
                if (tl.filter === 'Active') {
-                  tasksFilter = tasks.filter(el => !el.isDone)
+                  tasksFilter = tasks[tl.id].filter(el => !el.isDone)
                }
                if (tl.filter === 'Completed') {
-                  tasksFilter = tasks.filter(el => el.isDone)
+                  tasksFilter = tasks[tl.id].filter(el => el.isDone)
                }
 
                return (
@@ -65,14 +81,14 @@ const App = () => {
                      title={tl.title}
                      tasks={tasksFilter}
                      removeTask={removeTask}
+                     removeTodolist={removeTodolist}
                      changeFilter={changeFilter}
                      addTask={addTask}
                      changeStatusCheckbox={changeStatusCheckbox}
                      filter={tl.filter}
                   />
                )
-            })
-         }
+            })}
       </div>
    );
 };
