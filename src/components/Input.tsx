@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import style from '../modules/Input.module.css';
 
 type InputPropsType = {
@@ -10,6 +10,18 @@ type InputPropsType = {
 }
 
 export const Input = (props: InputPropsType) => {
+
+   // let [title, setTitle] = useState('')
+   // let [error, setError] = useState<string | null>(null)
+   //
+   // const addTaskHandler = () => {
+   //    if (title.trim() !== '') {
+   //       props.addTask(props.todolistId, title.trim())
+   //       setTitle('')
+   //    } else {
+   //       setError('Title is required')
+   //    }
+   // }
 
    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
       props.setError(null)
@@ -25,10 +37,11 @@ export const Input = (props: InputPropsType) => {
    return (
       <div>
          {props.error && <div className={style.errorMessage}>{props.error}</div>}
-         <input className={props.error ? style.error : ''}
-                value={props.title}
-                onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
+         <input
+            className={props.error ? style.error : ''}
+            value={props.title }
+            onChange={onChangeHandler}
+            onKeyPress={onKeyPressHandler}
          />
       </div>
    );

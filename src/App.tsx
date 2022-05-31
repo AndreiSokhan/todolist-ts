@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import {TasksPropsType, Todolist} from "./components/Todolist";
 import {v1} from "uuid";
+import {Input} from "./components/Input";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export type FilterValueType = "All" | "Active" | "Completed";
 export type TodolistsType = {
@@ -54,6 +57,10 @@ const App = () => {
       setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
    }
 
+   const addTodolist=(todolistId: string)=>{
+      setTodolists()
+   }
+
    const changeStatusCheckbox = (todolistId: string, taskId: string, eventStatus: boolean) => {
       setTasks({
          ...tasks,
@@ -68,6 +75,13 @@ const App = () => {
 
    return (
       <div className="App">
+         {/*<Input*/}
+         {/*   title={}*/}
+         {/*   setTitle={}*/}
+         {/*   callBack={addTodolist}*/}
+         {/*   error={error}*/}
+         {/*   setError={setError}*/}
+         {/*/>*/}
          {
             todolists.map((tl) => {
                let tasksFilter = tasks[tl.id];
@@ -88,6 +102,7 @@ const App = () => {
                      removeTodolist={removeTodolist}
                      changeFilter={changeFilter}
                      addTask={addTask}
+                     // addTodolist={addTodolist}
                      changeStatusCheckbox={changeStatusCheckbox}
                      filter={tl.filter}
                   />

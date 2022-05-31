@@ -21,6 +21,7 @@ type TodolistPropsType = {
    removeTodolist: (todolistId: string) => void
    changeFilter: (todolistId: string, filterValue: FilterValueType) => void
    addTask: (todolistId: string, newTitle: string) => void
+   // addTodolist: (todolistId: string) => void
    changeStatusCheckbox: (todolistId: string, taskId: string, eventStatus: boolean) => void
    filter: FilterValueType
 }
@@ -48,7 +49,7 @@ export const Todolist = (props: TodolistPropsType) => {
    }
 
    const removeTodolistHandler = (todolistId: string) => {
-      props.removeTodolist(props.todolistId)
+      props.removeTodolist(todolistId)
    }
 
    const chackboxHandler = (todolistId: string, taskId: string, currentEvent: boolean) => {
