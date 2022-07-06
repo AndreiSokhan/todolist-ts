@@ -1,4 +1,5 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
+import {FullInput} from "./FullInput";
 
 type TaskPropsType = {
    id: string
@@ -16,23 +17,6 @@ type TodolistPropsType = {
 
 export const Todolist = (props: TodolistPropsType) => {
 
-   let [newTitle, setNewTitle] = useState('')
-
-   const addTaskHandler = () => {
-      props.addTask(newTitle)
-      setNewTitle('')
-   }
-
-   const onKeyPressHandler = (event:KeyboardEvent<HTMLInputElement>) => {
-      if(event.key === 'Enter'){
-         addTaskHandler()
-      }
-   }
-
-   const onChangeHandler=(event:ChangeEvent<HTMLInputElement>)=>{
-      setNewTitle(event.currentTarget.value)
-   }
-
    const FilterHandler=(filterValue:string)=>{
       props.tasksFilter(filterValue)
    }
@@ -45,11 +29,7 @@ export const Todolist = (props: TodolistPropsType) => {
       <div>
          <h3>{props.title}</h3>
          <div>
-            <input
-               value={newTitle}
-               onKeyPress={onKeyPressHandler}
-               onChange={onChangeHandler}/>
-            <button onClick={addTaskHandler}>+</button>
+            <FullInput callBack={props.addTask}/>
          </div>
          <ul>
             {/*   t -> это один элемент массива т.е. одна таска*/}
