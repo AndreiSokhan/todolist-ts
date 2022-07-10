@@ -3,6 +3,8 @@ import './App.css';
 import {Todolist} from "./components/Todolist";
 import {v1} from "uuid";
 
+export type FilterValueType = "All" | "Active" | "Completed";
+
 function App() {
 
    let [tasks, setTasks] = useState([
@@ -18,32 +20,39 @@ function App() {
       setTasks(filtered)
    }
 
-   const addTask=(newTitle:string)=>{
-      let newTask = {id: v1(), title: newTitle, isDone: true}
-      setTasks([newTask, ...tasks])
+   const addTask = (title: string) => {
+      let task = {id: v1(), title: title, isDone: false}
+      setTasks([task, ...tasks])
    }
 
-   let [filter, setFilter] = useState("All")
-   const tasksFilter = (filterValue: string) => {
-      setFilter(filterValue)
+   const changeStatusCheckbox = (currentId: string, eventStatus: boolean) => {
+      setTasks(tasks.map((el) => el.id === currentId ? {...el, isDone: eventStatus} : el))
    }
 
-   let chahgefilter = tasks
+   let [filter, setFilter] = useState();
+
+   const changeFilter = (value: FilterValueType) => {
+      setFilter(value)
+   }
+
+   let tasksFilter = tasks
    if (filter === "Active") {
-      chahgefilter = tasks.filter(t => t.isDone === false)
+      tasksFilter = tasks.filter(t => t.isDone === false)
    }
    if (filter === "Completed") {
-      chahgefilter = tasks.filter(t => t.isDone === true)
+      tasksFilter = tasks.filter(t => t.isDone === true)
    }
 
    return (
       <div className="App">
          <Todolist
             title={"What to learn"}
-            task={chahgefilter}
+            task={tasksFilter}
             removeTask={removeTask}
-            tasksFilter={tasksFilter}
+            changeFilter={changeFilter}
             addTask={addTask}
+            changeStatusCheckbox={changeStatusCheckbox}
+            filter={filter}
          />
       </div>
    );
