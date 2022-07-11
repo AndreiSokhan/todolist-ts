@@ -10,10 +10,11 @@ type TaskPropsType = {
 }
 
 type TodolistPropsType = {
+   todolistID: string
    title: string
    task: Array<TaskPropsType>
    removeTask: (taskId: string) => void
-   changeFilter: (value: FilterValueType) => void
+   changeFilter: (todolistID:string, value: FilterValueType) => void
    addTask: (title: string) => void
    changeStatusCheckbox: (currentId: string, eventStatus: boolean) => void
    filter: FilterValueType
@@ -21,8 +22,8 @@ type TodolistPropsType = {
 
 export const Todolist = (props: TodolistPropsType) => {
 
-   const changeFilterHandler = (value: FilterValueType) => {
-      props.changeFilter(value)
+   const changeFilterHandler = (todolistID:string, value: FilterValueType) => {
+      props.changeFilter(props.todolistID, value)
    }
 
    const removeTaskHandler = (tID: string) => {
@@ -44,7 +45,7 @@ export const Todolist = (props: TodolistPropsType) => {
                }
 
                return (
-                  <li key={index} className={t.isDone ? s.isDone : ""}>
+                  <li key={t.id} className={t.isDone ? s.isDone : ""}>
                      <button onClick={() => removeTaskHandler(t.id)}>x</button>
                      <input type="checkbox" checked={t.isDone}
                             onChange={checkBoxHandler}/>
@@ -55,13 +56,13 @@ export const Todolist = (props: TodolistPropsType) => {
          </ul>
          <div>
             <button className={props.filter === 'All' ? s.activeFilter : ''}
-                    onClick={() => changeFilterHandler('All')}>All
+                    onClick={() => changeFilterHandler(props.todolistID,'All')}>All
             </button>
             <button className={props.filter === 'Active' ? s.activeFilter : ''}
-                    onClick={() => changeFilterHandler('Active')}>Active
+                    onClick={() => changeFilterHandler(props.todolistID,'Active')}>Active
             </button>
             <button className={props.filter === 'Completed' ? s.activeFilter : ''}
-                    onClick={() => changeFilterHandler('Completed')}>Completed
+                    onClick={() => changeFilterHandler(props.todolistID,'Completed')}>Completed
             </button>
          </div>
       </div>

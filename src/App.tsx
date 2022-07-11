@@ -4,8 +4,18 @@ import {Todolist} from "./components/Todolist";
 import {v1} from "uuid";
 
 export type FilterValueType = "All" | "Active" | "Completed";
+export type TodolistsType = {
+   id: string
+   title: string
+   filter: FilterValueType
+}
 
 function App() {
+
+   let [todolists, setTodolists] = useState<Array<TodolistsType>>([
+      {id: v1(), title: 'What to learn', filter: 'All'},
+      {id: v1(), title: 'What to buy', filter: 'Completed'},
+   ])
 
    let [tasks, setTasks] = useState([
       {id: v1(), title: "HTML&CSS", isDone: true},
@@ -29,31 +39,37 @@ function App() {
       setTasks(tasks.map((el) => el.id === currentId ? {...el, isDone: eventStatus} : el))
    }
 
-   let [filter, setFilter] = useState();
-
-   const changeFilter = (value: FilterValueType) => {
-      setFilter(value)
-   }
-
-   let tasksFilter = tasks
-   if (filter === "Active") {
-      tasksFilter = tasks.filter(t => t.isDone === false)
-   }
-   if (filter === "Completed") {
-      tasksFilter = tasks.filter(t => t.isDone === true)
+   const changeFilter = (todolistID: string, value: FilterValueType) => {
+      setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, filter: value} : tl))
    }
 
    return (
       <div className="App">
-         <Todolist
-            title={"What to learn"}
-            task={tasksFilter}
-            removeTask={removeTask}
-            changeFilter={changeFilter}
-            addTask={addTask}
-            changeStatusCheckbox={changeStatusCheckbox}
-            filter={filter}
-         />
+         {todolists.map((tl) => {
+
+            let tasksFilter = tasks
+            if (tl.filter === "Active") {
+               tasksFilter = tasks.filter(t => t.isDone === false)
+            }
+            if (tl.filter === "Completed") {
+               tasksFilter = tasks.filter(t => t.isDone === true)
+            }
+
+            return (
+               <Todolist
+                  key={tl.id}
+                  todolistID={tl.id}
+                  title={tl.title}
+                  task={tasksFilter}
+                  removeTask={removeTask}
+                  changeFilter={changeFilter}
+                  addTask={addTask}
+                  changeStatusCheckbox={changeStatusCheckbox}
+                  filter={tl.filter}
+               />
+            )
+         })}
+
       </div>
    );
 }
