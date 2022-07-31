@@ -5,14 +5,14 @@ type FullInputPropsType = {
    callBack: (title: string) => void
 }
 
-export const FullInput = (props: FullInputPropsType) => {
+export const FullInput = ({callBack}: FullInputPropsType) => {
 
    let [title, setTitle] = useState('')
-   let [error, setError] = useState<string|null>(null)
+   let [error, setError] = useState<string | null>(null)
 
    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
-         addTaskHandler()
+         addTask()
       }
    }
 
@@ -21,12 +21,14 @@ export const FullInput = (props: FullInputPropsType) => {
       setTitle(event.currentTarget.value)
    }
 
-   const addTaskHandler = () => {
-      if (title.trim() !== '') {
-         props.callBack(title.trim())
+   const addTask = () => {
+      let newTitle = title.trim();
+      if (newTitle !== '') {
+         callBack(newTitle)
+         // props.callBack(title.trim())
          setTitle('')
       } else {
-         setError('Title is reguired!')
+         setError('Title is required!')
       }
    }
 
@@ -37,8 +39,8 @@ export const FullInput = (props: FullInputPropsType) => {
             value={title}
             onKeyPress={onKeyPressHandler}
             onChange={onChangeHandler}/>
-         <button onClick={addTaskHandler}>+</button>
-         {error &&<div className={s.errorMessage}>{error}</div>}
+         <button onClick={addTask}>+</button>
+         {error && <div className={s.errorMessage}>{error}</div>}
       </div>
    );
 };
