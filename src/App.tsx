@@ -4,9 +4,9 @@ import {Todolist} from "./Todolist";
 
 function App() {
    const tasks1 = [
-      { id: 1, title: "HTML&CSS", isDone: true },
-      { id: 2, title: "JS", isDone: true },
-      { id: 3, title: "ReactJS", isDone: false }
+      { id: 1, title: "HTML&CSS", isDone: true }, //0
+      { id: 2, title: "JS", isDone: true },       //1
+      { id: 3, title: "ReactJS", isDone: false }  //2
    ]
    const tasks2 = [
       { id: 1, title: "Hello world", isDone: true },
