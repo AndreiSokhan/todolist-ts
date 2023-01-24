@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {filterType} from "./App";
+import {Button} from "./Components/Button";
 
 type TodolistPropsType = {
    title: string
@@ -29,6 +30,12 @@ export const Todolist = (props: TodolistPropsType) => {
    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') addTaskHandler()
    }
+   const removeTaskHandler =(elID:string)=>{
+      props.removeTask(elID)
+   }
+   const onClickHandler =(nameButton:filterType)=>{
+      props.taskFilter(nameButton)
+   }
 
    return (
       <div>
@@ -39,16 +46,15 @@ export const Todolist = (props: TodolistPropsType) => {
                onChange={onChangeHandler}
                onKeyPress={onKeyPressHandler}
             />
-            <button onClick={addTaskHandler}>+</button>
+            <Button title={'+'} callBack={addTaskHandler}/>
          </div>
          <ul>
             {props.tasks.map((el) => {
+
                return (
                   <li key={el.id}>
-                     <button onClick={() => {
-                        props.removeTask(el.id)
-                     }}>x
-                     </button>
+                     {/*<button onClick={()=>removeTaskHandler(el.id)}>x</button>*/}
+                     <Button title={'x'} callBack={()=>removeTaskHandler(el.id)}/>
                      <input type="checkbox" checked={el.isDone}/>
                      <span>{el.title}</span>
                   </li>
@@ -56,18 +62,9 @@ export const Todolist = (props: TodolistPropsType) => {
             })}
          </ul>
          <div>
-            <button onClick={() => {
-               props.taskFilter('All')
-            }}>All
-            </button>
-            <button onClick={() => {
-               props.taskFilter('Active')
-            }}>Active
-            </button>
-            <button onClick={() => {
-               props.taskFilter('Completed')
-            }}>Completed
-            </button>
+            <Button title={'All'} callBack={()=>onClickHandler('All' )}/>
+            <Button title={'Active'} callBack={()=>onClickHandler('Active' )}/>
+            <Button title={'Completed'} callBack={()=>onClickHandler('Completed' )}/>
          </div>
       </div>
    );

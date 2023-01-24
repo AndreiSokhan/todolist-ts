@@ -38,7 +38,6 @@ function App() {
       filter = tasks.filter((el) => el.isDone)
    }
 
-
    return (
       <div className="App">
          <Todolist
