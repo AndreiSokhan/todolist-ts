@@ -1,55 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
-import {v1} from "uuid";
-
-export type filterType = 'All' | 'Active' | 'Completed'
 
 function App() {
 
-   let [tasks, setTasks] = useState([
-      {id: v1(), title: "HTML&CSS", isDone: true},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false}
-   ])
+   const title1='What to learn'
+   const title2='What to bye'
+   const tasks1 = [
+      {id:1, title:"HTML & CSS", isDone: true},
+      {id:2, title:"JS", isDone: true},
+      {id:3, title:"ReactJS", isDone: false}
+   ]
+   const tasks2 = [
+      {id:1, title:"bread", isDone: true},
+      {id:2, title:"solt", isDone: false},
+      {id:3, title:"milk", isDone: false},
+      {id:4, title:"milk", isDone: false},
+      {id:5, title:"milk", isDone: false}
+   ]
 
-   const addTask=(title:string)=>{
-      let task ={ id: v1(), title: title, isDone: false};
-      setTasks([task, ...tasks])
-   }
-
-   let [filteredTasks, setfilteredTasks] = useState<filterType>('All')
-
-   const removeTask = (id: string) => {
-      setTasks(tasks.filter((el) => el.id !== id))
-   }
-
-   const taskFilter = (filterValue: filterType) => {
-      setfilteredTasks(filterValue)
-   }
-
-   let filter = tasks
-   if (filteredTasks === 'Active') {
-      filter = tasks.filter((el) => el.isDone === false)
-   }
-   if (filteredTasks === 'Completed') {
-      filter = tasks.filter((el) => el.isDone)
-   }
-
-   return (
-      <div className="App">
-         <Todolist
-            title="What to learn"
-            tasks={filter}
-            removeTask={removeTask}
-            taskFilter={taskFilter}
-            addTask={addTask}
-         />
-
-      </div>
-   );
+    return (
+        <div className="App">
+              <Todolist title={title1} tasks={tasks1}/>
+              <Todolist title={title2} tasks={tasks2}/>
+        </div>
+    );
 }
 
 export default App;
