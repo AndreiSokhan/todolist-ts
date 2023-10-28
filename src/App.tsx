@@ -18,27 +18,27 @@ function App() {
    }
 
    //тут мы создали стейт для фильтрации
-   let [filteredTasks, setfilteredTasks] = useState<buttonNameType>('All')
-
-   let filterTasks = (nameButton: buttonNameType) => {
-      setfilteredTasks(nameButton)
-   }
-
-   let durshlag = tasks
-   if (filteredTasks === 'Active') {
-      durshlag = tasks.filter(el => !el.isDone)
-   } if (filteredTasks === 'Completed') {
-      durshlag = tasks.filter(el => el.isDone)
-   }
+   // let [filteredTasks, setfilteredTasks] = useState<buttonNameType>('All')
+   //
+   // let filterTasks = (nameButton: buttonNameType) => {
+   //    setfilteredTasks(nameButton)
+   // }
+   //
+   // let durshlag = tasks
+   // if (filteredTasks === 'Active') {
+   //    durshlag = tasks.filter(el => !el.isDone)
+   // } if (filteredTasks === 'Completed') {
+   //    durshlag = tasks.filter(el => el.isDone)
+   // }
 
 
    return (
       <div className="App">
          <Todolist
             title='What to learn'
-            tasks={durshlag}
+            tasks={tasks}
             removeTask={removeTask}
-            filterTasks={filterTasks}
+            // filterTasks={filterTasks}
          />
       </div>
    );
