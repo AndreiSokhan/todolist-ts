@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 
+
+export type buttonNameType = 'All' | 'Active' | 'Completed'
+
 function App() {
 
    let [tasks, setTasks] = useState([
@@ -14,14 +17,28 @@ function App() {
       setTasks(tasks.filter(el => el.id !== id))
    }
 
+   //тут мы создали стейт для фильтрации
+   let [filteredTasks, setfilteredTasks] = useState<buttonNameType>('All')
+
+   let filterTasks = (nameButton: buttonNameType) => {
+      setfilteredTasks(nameButton)
+   }
+
+   let durshlag = tasks
+   if (filteredTasks === 'Active') {
+      durshlag = tasks.filter(el => !el.isDone)
+   } if (filteredTasks === 'Completed') {
+      durshlag = tasks.filter(el => el.isDone)
+   }
+
 
    return (
       <div className="App">
          <Todolist
             title='What to learn'
-            tasks={tasks}
+            tasks={durshlag}
             removeTask={removeTask}
-
+            filterTasks={filterTasks}
          />
       </div>
    );
